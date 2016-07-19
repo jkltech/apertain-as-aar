@@ -258,10 +258,6 @@ The array size determines the number of Screens in the Customer On-Boarding UI. 
 
 **NOTE**: It is recommended to keep the On-Boarding UI to 3-5 intriguing screenshot or usage introductions.
 
-## Use the following import for FragmentManager:
-
-	import android.support.v4.app.FragmentManager;
-
 ## To get the A(P)ertain Customer On-Boarding UI use the following code snippet: 
 
 	int[] bgImages = {R.drawable.food, R.drawable.movie};
