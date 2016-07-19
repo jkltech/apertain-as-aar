@@ -8,8 +8,8 @@ Before you Begin
 
 Before implementing the SDK, make sure you have the following:
 
-* Download the A(P)ertain SDK from [here](https://github.com/jkltech/apertain-sdk-lib).
-* Import the SDK to the IDE Workspace and add reference to the Project.
+* Download the A(P)ertain SDK AAR from [here](https://github.com/jkltech/apertain-as-aar).
+* Import the SDK to the Android Studio Workspace and add reference to the Project.
 
 (In Eclipse, Right click the project. Select properties -> Android. In Library section click Add button and select the A(P)ertain SDK library, then click Apply and Ok.)
 
@@ -269,12 +269,6 @@ The array size determines the number of Screens in the Customer On-Boarding UI. 
 	int[] titleText = {R.string.title1, R.string.title2, R.string.title3, R.string.title4};
 	int[] descriptionText = {R.string.description1, R.string.description2, R.string.description3, R.string.description4};
 
-	private void moveToAPertainOnBoardingFragment()
-	{
-		FragmentManager fragmentmanager = getFragmentManager();
-		ShowUserOnboardUIFragment onboardingUIFragment = 
-		new ShowUserOnboardUIFragment(bgImages, titleText, descriptionText, bgColors);
-		onboardingUIFragment.setCancelable(false);
-		onboardingUIFragment.show(fragmentmanager, null);	
-	}
+	android.support.v4.app.FragmentActivity fragmentActivity = (FragmentActivity)activity;
 
+	apertainInstance.showUserOnboardingUI(fragmentActivity, bgImages, titleText, descriptionText, bgcolors);
