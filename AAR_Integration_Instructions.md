@@ -19,13 +19,13 @@ Open your Android Studio App Project.
 
 Right click on your project and choose "Open Module Settings".
 
-![Open Module Settings](http://i.stack.imgur.com/bu5D2.png)
+![Open Module Settings](./images/instructions-step-2.png)
 
 ### Step 3:
 
 Click the "+" button in the top left to add a new module.
 
-![Add a New Module](http://i.stack.imgur.com/oEH90.png)
+![Add a New Module](./images/instructions-step-3.png)
 
 ### Step 4:
 
