@@ -18,7 +18,7 @@ Getting Started
 
 To integrate APertain with the App, the following changes are needed in the Android App Manifest file (AndroidManifest.xml).
 
-## 1.1. Permissions for A(P)ertain
+#### 1.1. Permissions for A(P)ertain
 
 A(P)ertain tries to be as non-intrusive with minimal permissions as required to provide the developers the best possible App data as well as App User Analytics as possible.
 
@@ -36,7 +36,7 @@ The developers can update their project’s AndroidManifest.xml file by adding t
 	
 Other than the permissions the following entries should be added to initiate relevant APertain features.
 
-## 1.2. For Initiating A(P)ertain (Before first run of App)
+#### 1.2. For Initiating A(P)ertain (Before first run of App)
 
 Mobile Users tend to forget that they have downloaded an App, so to make sure they run the App and get to know about it, we need to send in Mobile User Onboarding Push Notifications. This can happen only when APertain is registered even if the user hasn't run the App once. These parameters passed in will help achieve that goal.
 
@@ -45,7 +45,7 @@ Mobile Users tend to forget that they have downloaded an App, so to make sure th
 
 	<meta-data android:name="com.jkl.apertain.USER_APP_SIGNATURE" android:value="USER_APP_SIGNATURE" />
 	
-## 1.3. For Enabling Mobile User Onboarding Drip Push Notifications
+#### 1.3. For Enabling Mobile User Onboarding Drip Push Notifications
 
 Mobile User Onboarding Drip Push Notifications is a way to engage the Users even if they haven't yet started using the App. Otherwise, there are users who have downloaded the App and have forgotten what the App is about. This is a way to remind the users that there is a fabulous App they have downloaded with all such wonderful features they should take a look at.
 
@@ -55,7 +55,7 @@ Mobile User Onboarding Drip Push Notifications is a way to engage the Users even
 	<receiver android:name="com.jkl.apertain.fcm.NotificationEventReceiver"/>
 	<receiver android:name="com.jkl.apertain.fcm.NotificationClearService"/>
 	
-## 1.4. Smart Push Notifications
+#### 1.4. Smart Push Notifications
 
 Using Smart Push Notifications feature of APertain needs a specific set of classes to be invoked. Please copy the following entries to enable these features.
 
@@ -96,7 +96,7 @@ The App Unique ID and User App Signature are generated as you add the App in A(P
 		Log.e(TAG, "Error while initializing A(P)ertain " + ape.getMessage(), ape);
 	}
 
-### 2.1 Destroy the A(P)ertain Object
+#### 2.1 Destroy the A(P)ertain Object
 
 In onDestroy() call the following code to cleanup the A(P)ertain instance created.
 
@@ -108,7 +108,7 @@ From within the App/Game, a user tends to experience various levels of emotions 
 
 A(P)ertain allows such User Experiences to be recorded and then use those specific experience values to further add relevant process flows related to the App/Game.
 
-### 3.1 Recording a Positive User Experience
+#### 3.1 Recording a Positive User Experience
 
 Whenever a positive experience occurred (eg., Level Completion in a game or Achieving some Milestone in a fitness App, etc.,) the developer can add this code to record the positive experience gained by the user.
 
@@ -118,7 +118,7 @@ Whenever a positive experience occurred (eg., Level Completion in a game or Achi
 
 Here, the [Event_Name] is used as a User Experience Parameter which can be further used in Rules defined for Pertain Engine as well as Smart Rating & Feedback Prompts..
 
-### 3.2 Recording a Negative User Experience
+#### 3.2 Recording a Negative User Experience
 
 When a user gets a negative experience (eg., Level Failed or invalid process input) you can add this code to record the negative experience for the user.
 
@@ -126,7 +126,7 @@ When a user gets a negative experience (eg., Level Failed or invalid process inp
 
 	Example: Apertain.logUserXp(this, "LevelFailed", Apertain.NEGATIVEXP);
 
-### 3.3 Recording a Neutral Experience
+#### 3.3 Recording a Neutral Experience
 
 When a user gets a Neutral experience (neither positive or negative) you can add this code to record the neutral experience for the user.
 
@@ -138,7 +138,7 @@ When a user gets a Neutral experience (neither positive or negative) you can add
 
 In-App Rating Prompt Flow an intelligent program flow that shows the Rating Prompt to each user according to their behavior & past experiences within the App/Game. The prompt flow is shown based on the experience user has gained in the App/Game according to the configuration made by the developer in A(P)ertain SaaS backend.
 
-### 4.1 Showing Smart Rating Prompt
+#### 4.1 Showing Smart Rating Prompt
 
 The following code shows the Smart Rating Prompt when the conditions as configured in A(P)ertain SaaS backend are met. 
 
@@ -197,31 +197,31 @@ Within the Activity’s class onStart, onStop, onPause, onResume methods can be 
 
 **NOTE**: A(P)ertain start, pause, resume, stop code should be called on all the activities.
 
-### 6.1 Start A(P)ertain Activity Tracking
+#### 6.1 Start A(P)ertain Activity Tracking
 
 In onStart() add the following code to start tracking an Activity
 
 	Apertain.start(this);
 
-### 6.2 Pause A(P)ertain Activity Tracking
+#### 6.2 Pause A(P)ertain Activity Tracking
 
 In onPause() add the following code to mention to A(P)ertain this Activity is paused 
 
 	Apertain.pause(this);
 
-### 6.3 Resume A(P)ertain Activity Tracking
+#### 6.3 Resume A(P)ertain Activity Tracking
 
 In onResume() add the following code to mention to A(P)ertain this Activity is resumed
 
 	Apertain.resume(this);
 
-### 6.4 Stop A(P)ertain Activity Tracking
+#### 6.4 Stop A(P)ertain Activity Tracking
 
 In onStop() add the following code to mention to A(P)ertain this Activity is stopped
 
 	Apertain.stop(this);
 
-### 6.5 Start A(P)ertain Process Tracking
+#### 6.5 Start A(P)ertain Process Tracking
 
 Sometimes we create separate streams of work within the Activity which engage with the User in a manner to start and complete a process. For example, we may be in a screen where the user initiates in-app purchase, now even though the Activity is not just intended for in-app purchase, by creating a separate process within the Activity it becomes difficult for the developer to ascertain the result of this process and why User successfully purchased or not. 
 
@@ -233,7 +233,7 @@ Here, you have the code for starting the process tracking.
 
 	Example: Apertain.startProcess(“In-App-Purchase”, this);
 
-### 6.6 Stop A(P)ertain Process Tracking
+#### 6.6 Stop A(P)ertain Process Tracking
 
 Here, you have the code for stopping the tracking of a process as it completes.
 
@@ -299,7 +299,7 @@ Here is the Sample UI of a single screen in A(P)ertain On-Boarding UI.
 
 ![Image of Customer On-boarding UI Design Sample](https://apertain.com/app/prd/api/customer_onboarding_ui_sample.jpg)
 
-## 9.1. A(P)ertain OnBoardingUI has Four arguments:
+#### 9.1. A(P)ertain OnBoardingUI has Four arguments:
 
 1. Integer array of resource that mention images for each page.
 2. Integer array of resource that mention Title text for each page.
@@ -310,13 +310,14 @@ The array size determines the number of Screens in the Customer On-Boarding UI. 
 
 **NOTE**: It is recommended to keep the On-Boarding UI to 3-5 intriguing screenshot or usage introductions.
 
-## 9.2. To get the A(P)ertain Customer On-Boarding UI use the following code snippet: 
+#### 9.2. To get the A(P)ertain Customer On-Boarding UI use the following code snippet: 
 
 	/* * /
 	**	You can use the arrays.xml to add values for the following arrays in your App
-	**	This is how the xml will look like ... [here](./resources/arrays.xml)
-	**	
-	**	
+	**	This is how the xml will look like ... 
+
+arrays.xml can be looked over [here](./resources/arrays.xml)
+	
 	*/
 	String[] titlesStrArr = getResources().getStringArray(R.array.onboarding_ui_titles);
 	String[] descStrArr = null;//getResources().getStringArray(R.array.onboarding_ui_descriptions);
@@ -345,11 +346,17 @@ The array size determines the number of Screens in the Customer On-Boarding UI. 
 
 ### 10. Push Notifications
 
-If you would like to integrate Push Notifications with your App using APertain SDK, first of all you should move your App to Android Studio. APertain uses FCM (Firebase Cloud Messaging) to integrate Push Notifications within your App. Google has deprecated GCM (Google Cloud Messaging) which relied on Android Device IDs. Now with FCM, you just need an Authorization Token from the Device to push Notifications. You don't need Android Device IDs. This is the way forward as handling Android Device IDs were affecting lots of parameters of User Privacy. Also you should use the AAR (Android Archive Library: The 'aar' bundle is the binary distribution of an Android Library Project.) bundle of the APertain SDK available over [here](https://github.com/jkltech/apertain-as-aar).
+If you would like to integrate Push Notifications with your App using APertain SDK, first of all you should move your App to Android Studio. APertain uses FCM (Firebase Cloud Messaging) to integrate Push Notifications within your App. 
+
+Google has deprecated GCM (Google Cloud Messaging) which relied on Android Device IDs. Now with FCM, you just need an Authorization Token from the Device to push Notifications. You don't need Android Device IDs. 
+
+This is the way forward as handling Android Device IDs were affecting lots of parameters of User Privacy. 
+
+Also you should use the AAR (Android Archive Library: The 'aar' bundle is the binary distribution of an Android Library Project.) bundle of the APertain SDK available over [here](https://github.com/jkltech/apertain-as-aar).
 
 Please see the instructions to integrate an AAR file into the Android Studio Project of your App fromt the following [URL](./AAR_Integration_Instructions.md).
 
-## 10.1 Push Notification Configuration:
+#### 10.1 Push Notification Configuration:
 
 [Login](https://www.apertain.com/login.apt) to the APertain Console, and navigate to "Interactions --> Push Notifications --> Push Configuration".
 
