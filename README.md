@@ -9,14 +9,16 @@ Before you Begin
 Before implementing the SDK, make sure you have the following:
 
 * Download the A(P)ertain SDK AAR from [here](https://github.com/jkltech/apertain-as-aar).
-* Import the SDK to the Android Studio Workspace and add reference to the Project.
-
-(In Eclipse, Right click the project. Select properties -> Android. In Library section click Add button and select the A(P)ertain SDK library, then click Apply and Ok.)
+* Add the AAR into your Android Studio App Project using the instructions over [here](https://github.com/jkltech/apertain-as-aar/blob/master/AAR_Integration_Instructions.md).
 
 Getting Started
 ---------------
 
-### 1. Permissions for A(P)ertain
+### 1. Changes to Android Application Manifest
+
+To integrate APertain with the App, the following changes are needed in the Android App Manifest file (AndroidManifest.xml).
+
+## 1.1. Permissions for A(P)ertain
 
 A(P)ertain tries to be as non-intrusive with minimal permissions as required to provide the developers the best possible App data as well as App User Analytics as possible.
 
@@ -27,7 +29,56 @@ The developers can update their project’s AndroidManifest.xml file by adding t
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" /> 
     <!-- A(P)ertain Optional Permissions -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" /> <!-- To get user name and email -->
+	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /> <!-- To start necessary Services on boot completion -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- To track location of the Users -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- To track accurate location of the Users -->
+	
+Other than the permissions the following entries should be added to initiate relevant APertain features.
+
+## 1.2. For Initiating A(P)ertain (Before first run of App)
+
+Mobile Users tend to forget that they have downloaded an App, so to make sure they run the App and get to know about it, we need to send in Mobile User Onboarding Push Notifications. This can happen only when APertain is registered even if the user hasn't run the App once. These parameters passed in will help achieve that goal.
+
+	<-- For Inititating Apertain Service before first Run of App -->
+	<meta-data android:name="com.jkl.apertain.APP_UNIQUE_ID" android:value="APP_UNIQUE_ID" />
+
+	<meta-data android:name="com.jkl.apertain.USER_APP_SIGNATURE" android:value="USER_APP_SIGNATURE" />
+	
+## 1.3. For Enabling Mobile User Onboarding Drip Push Notifications
+
+Mobile User Onboarding Drip Push Notifications is a way to engage the Users even if they haven't yet started using the App. Otherwise, there are users who have downloaded the App and have forgotten what the App is about. This is a way to remind the users that there is a fabulous App they have downloaded with all such wonderful features they should take a look at.
+
+	<-- For Mobile User OnBoarding Drip Push Notifications & Reports -->
+	<service android:name="com.jkl.apertain.fcm.NotificationIntentService"/>
+	<service android:name="com.jkl.apertain.fcm.SendNotificationService"/>
+	<receiver android:name="com.jkl.apertain.fcm.NotificationEventReceiver"/>
+	<receiver android:name="com.jkl.apertain.fcm.NotificationClearService"/>
+	
+## 1.4. Smart Push Notifications
+
+Using Smart Push Notifications feature of APertain needs a specific set of classes to be invoked. Please copy the following entries to enable these features.
+
+	<-- For Push Notification -->
+	<service android:name="com.jkl.apertain.fcm.APertainFCMService" android:exported="true">
+		<intent-filter android:priority="-500">
+			<action android:name="com.google.firebase.MESSAGING_EVENT" />
+		</intent-filter>
+	</service>
+
+	<service android:name="com.jkl.apertain.fcm.APertainFCMInstanceIdService" android:exported="true">
+		<intent-filter android:priority="-500">
+			<action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+		</intent-filter>
+	</service>
+
+	<-- For Customizing Push Notification On Click Event -->
+	<meta-data android:name="com.jkl.apertain.fcm.ApertainPushActionListener"
+		android:value="APP_IMPLMENTATION_OF_APERTAIN_PUSH_ACTION_LISTENER_INTERFACE" />
+
+	<-- For Push Notification Logo since Android 5.0 Lollypop -->
+	<meta-data android:name="app_logo_resource_id"
+		android:resource="@drawable/APP_WHITE_LOGO_WITH_BACKGROUND" />
 	
 ### 2. Initialize the SDK
 
@@ -39,7 +90,8 @@ The App Unique ID and User App Signature are generated as you add the App in A(P
 	String userAppSignature = "xxxxx";
 	try {
 		ApertainFactory.init(context, appUniqueID, userAppSignature);
-		ApertainFactory.setUserName(userName); //Optional. If game/app has username add it here
+		ApertainFactory.setUserName(userName); //Optional. If Game/App has collected username from User
+		ApertainFactory.setUserEmail(userEmail); //Optional. If Game/App has collected e-mail from User
 	} catch (ApertainException ape) {
 		Log.e(TAG, "Error while initializing A(P)ertain " + ape.getMessage(), ape);
 	}
@@ -247,7 +299,7 @@ Here is the Sample UI of a single screen in A(P)ertain On-Boarding UI.
 
 ![Image of Customer On-boarding UI Design Sample](https://apertain.com/app/prd/api/customer_onboarding_ui_sample.jpg)
 
-## A(P)ertain OnBoardingUI has Four arguments:
+## 9.1. A(P)ertain OnBoardingUI has Four arguments:
 
 1. Integer array of resource that mention images for each page.
 2. Integer array of resource that mention Title text for each page.
@@ -258,13 +310,49 @@ The array size determines the number of Screens in the Customer On-Boarding UI. 
 
 **NOTE**: It is recommended to keep the On-Boarding UI to 3-5 intriguing screenshot or usage introductions.
 
-## To get the A(P)ertain Customer On-Boarding UI use the following code snippet: 
+## 9.2. To get the A(P)ertain Customer On-Boarding UI use the following code snippet: 
 
-	int[] bgImages = {R.drawable.food, R.drawable.movie};
-	int[] bgColors = {R.color.color1, R.color.color2, R.color.color3, R.color.color4};
-	int[] titleText = {R.string.title1, R.string.title2, R.string.title3, R.string.title4};
-	int[] descriptionText = {R.string.description1, R.string.description2, R.string.description3, R.string.description4};
-
+	/* * /
+	**	You can use the arrays.xml to add values for the following arrays in your App
+	**	This is how the xml will look like ... [here](./resources/arrays.xml)
+	**	
+	**	
+	*/
+	String[] titlesStrArr = getResources().getStringArray(R.array.onboarding_ui_titles);
+	String[] descStrArr = null;//getResources().getStringArray(R.array.onboarding_ui_descriptions);
+	int[] onboardingImagesLand = R.array.onboard_ui_images_land;
+	int[] onboardingImagesPortrait = R.array.onboard_ui_images_portrait;
+	int[] onboardingUIBackgroundColors = R.array.onboard_ui_colors;
+	
+	/* You can use either Fragment class or a FragmentActivity class to show up onboarding UI */
 	android.support.v4.app.FragmentActivity fragmentActivity = (FragmentActivity)activity;
 
-	apertainInstance.showUserOnboardingUI(fragmentActivity, bgImages, titleText, descriptionText, bgcolors);
+	/* * /
+	** If you don't want the description in the UI, 
+	** please leave the descriptionText array as a null parameter, 
+	** similarly for bgColors array.
+	/* */
+	Apertain apertainInstance = null;
+	try {
+		apertainInstance = ApertainFactory.getApertainInstance(context);
+	} catch (ApertainException e) {
+	}
+
+	if (apertainInstance != null) {
+		apertainInstance.showUserOnboardingUI(fragmentActivity, onboardingImagesLand, onboardingImagesPortrait, onboardingUIBackgroundColors,
+												titlesStrArr, descStrArr);
+	}
+
+### 10. Push Notifications
+
+If you would like to integrate Push Notifications with your App using APertain SDK, first of all you should move your App to Android Studio. APertain uses FCM (Firebase Cloud Messaging) to integrate Push Notifications within your App. Google has deprecated GCM (Google Cloud Messaging) which relied on Android Device IDs. Now with FCM, you just need an Authorization Token from the Device to push Notifications. You don't need Android Device IDs. This is the way forward as handling Android Device IDs were affecting lots of parameters of User Privacy. Also you should use the AAR (Android Archive Library: The 'aar' bundle is the binary distribution of an Android Library Project.) bundle of the APertain SDK available over [here](https://github.com/jkltech/apertain-as-aar).
+
+Please see the instructions to integrate an AAR file into the Android Studio Project of your App fromt the following [URL](./AAR_Integration_Instructions.md).
+
+## 10.1 Push Notification Configuration:
+
+[Login](https://www.apertain.com/login.apt) to the APertain Console, and navigate to "Interactions --> Push Notifications --> Push Configuration".
+
+In this page you configure the Push Configuration from your App's Firebase Cloud Messaging Console, also known as [FCM Console](https://console.firebase.google.com) following the steps provided [here](./Firebase_Instructions.md).
+
+When the APertain inititialization code is executed, APertain automatically registers the FCM Push Notifications to be listened by the APertain SDK. There is no additional coding needed. If you would like to subscribe for more Push Notifications from FCM, you can do so.

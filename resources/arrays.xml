@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<array name="onboard_ui_images_land">
+		<item>@drawable/rating_prompt_screen_land</item>
+		<item>@drawable/feedback_prompt_screen_land</item>
+		<item>@drawable/inapp_support_screen_land</item>
+		<item>@drawable/social_share_screen_land</item>
+		<item>@drawable/onboard_ui_screen_land</item>
+		<item>@drawable/push_notification_screen_land</item>
+	</array>
+
+	<array name="onboard_ui_images_portrait">
+		<item>@drawable/rating_prompt_screen</item>
+		<item>@drawable/feedback_prompt_screen</item>
+		<item>@drawable/inapp_support_screen</item>
+		<item>@drawable/social_share_screen</item>
+		<item>@drawable/onboard_ui_screen</item>
+		<item>@drawable/push_notification_screen</item>
+	</array>
+
+	<array name="onboard_ui_colors">
+		<item>@color/color1</item>
+		<item>@color/color2</item>
+		<item>@color/color3</item>
+		<item>@color/color4</item>
+		<item>@color/color5</item>
+		<item>@color/color6</item>
+	</array>
+
+	<array name="onboarding_ui_titles">
+		<item>Smart Rating Prompts</item>
+		<item>InApp Feedback Prompts</item>>
+		<item>InApp Support View</item>
+		<item>Social Share</item>
+		<item>User OnBoarding</item>
+		<item>Push Notification</item>
+	</array>
+
+	<array name="onboarding_ui_descriptions">
+		<item>Smart Rating Prompts</item>
+		<item>InApp Feedback Prompts</item>>
+		<item>InApp Support View</item>
+		<item>Social Share</item>
+		<item>User OnBoarding</item>
+		<item>Push Notification</item>
+	</array>
+
+</resources>
