@@ -50,6 +50,34 @@ Configure APertain Console with the noted down data such as App ID, relevant to 
 
 ![Configure your APertain Console](./images/firebase/fbase-instructions-step-7.png)
 
+### Step 8: Adding Firebase SDK in App
+
+First, add rules to your root-level build.gradle file, to include the google-services plugin:
+
+	buildscript {
+		// ...
+		dependencies {
+			// ...
+			classpath 'com.google.gms:google-services:3.0.0'
+		}
+	}
+
+Then, in your module Gradle file (usually the app/build.gradle), add the apply plugin line at the bottom of the file to enable the Gradle plugin:
+
+	apply plugin: 'com.android.application'
+
+	android {
+	  // ...
+	}
+
+	dependencies {
+	  // ...
+	  compile 'com.google.firebase:firebase-core:9.4.0'
+	}
+
+	// ADD THIS AT THE BOTTOM
+	apply plugin: 'com.google.gms.google-services'
+
 ## NOTE: 
 
 Instructions to integrate FCM with iOS or APNS with iOS will follow in another document as iOS SDK is made available. APertain iOS SDK is under development & will be made available soon.

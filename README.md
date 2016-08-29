@@ -178,6 +178,10 @@ As a developer you can place this view in any layout of your choice to let the u
 		Log.e(TAG, "Error while creating A(P)ertain Instance" + ape.getMessage(), ape);
 	}
 
+#### 5.1 App Support Chat View as a Popup within your Activity or Fragment:
+
+Please add the following code to show the App Support Chat View as a Popup in your Activity or Fragment.
+
 	View view = aPertainInstance.getAppSupportChatterView();
 	layout.addView(view);
 
@@ -185,9 +189,26 @@ Most developers add the App Support Chat Icon to the layout defining their own A
 
 Alternatively you can have your own icon to show the Support Chat Interface and add the click listener to that layout or button and call the following code inside onClick:
 
-	aPertainInstance.showApertainAppSupportChatter(); 
+	aPertainInstance.showApertainAppSupportChatter();
 
 As showing the In-App Support Chat will invade the flow of your App, if you would like to pause and resume your underlying Activity or Fragment code, please implement the ResumableActivity with methods pauseActivity() and resumeActivity() to add a callback for pausing and resuming the underlying activity or Fragment.
+
+#### 5.2 App Support Chat View as a Fragment:
+
+Please add the following code to show the App Support Chat View as another Fragment in your App.
+
+	android.app.Fragment inAppSupportFragment = new InAppSupportFragment();
+	FragmentManager fragmentManager = getFragmentManager();
+	FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+	fragmentTransaction.replace(R.id.frame_container, inAppSupportFragment);
+	fragmentTransaction.commit();
+
+#### 5.3 App Support Chat View as an Activity:
+
+Please add the following code to show the App Support Chat View as another Activity in your App.
+
+	Intent inAppSupportActivityIntent = new Intent(context, InAppSupportActivity.class);
+	startActivity(inAppSupportActivityIntent);
 
 ### 6. Tracking Activities & Processes
 
@@ -301,24 +322,23 @@ Here is the Sample UI of a single screen in A(P)ertain On-Boarding UI.
 
 #### 9.1. A(P)ertain OnBoardingUI has Four arguments:
 
-1. Integer array of resource that mention images for each page.
+1. Integer array of resource that mention images for each page (each for landscape and portrait orientations).
 2. Integer array of resource that mention Title text for each page.
 3. Integer array of resource that mention Description Text for each page.
 4. Integer array of resource that mention Background colors for each page.
 
 The array size determines the number of Screens in the Customer On-Boarding UI. For example the array for each argument is four, you will get four Screens.
 
+The sample arrays.xml for declaring the Screenshot Images, Title, Description & Background Colors can be looked up over [here](./resources/arrays.xml)
+
 **NOTE**: It is recommended to keep the On-Boarding UI to 3-5 intriguing screenshot or usage introductions.
 
 #### 9.2. To get the A(P)ertain Customer On-Boarding UI use the following code snippet: 
 
-	/* * /
-	**	You can use the arrays.xml to add values for the following arrays in your App
-	**	This is how the xml will look like ... 
-
-arrays.xml can be looked over [here](./resources/arrays.xml)
-	
-	*/
+	/**
+	 **	You can use the arrays.xml to add values for the following arrays in your App
+	 **	Please refer the url above for arrays.xml sample.
+	 */
 	String[] titlesStrArr = getResources().getStringArray(R.array.onboarding_ui_titles);
 	String[] descStrArr = null;//getResources().getStringArray(R.array.onboarding_ui_descriptions);
 	int[] onboardingImagesLand = R.array.onboard_ui_images_land;
@@ -328,11 +348,11 @@ arrays.xml can be looked over [here](./resources/arrays.xml)
 	/* You can use either Fragment class or a FragmentActivity class to show up onboarding UI */
 	android.support.v4.app.FragmentActivity fragmentActivity = (FragmentActivity)activity;
 
-	/* * /
-	** If you don't want the description in the UI, 
-	** please leave the descriptionText array as a null parameter, 
-	** similarly for bgColors array.
-	/* */
+	/**
+	 ** If you don't want the description in the UI, 
+	 ** please leave the descriptionText array as a null parameter, 
+	 ** similarly for bgColors array.
+	 */
 	Apertain apertainInstance = null;
 	try {
 		apertainInstance = ApertainFactory.getApertainInstance(context);
@@ -363,3 +383,10 @@ Please see the instructions to integrate an AAR file into the Android Studio Pro
 In this page you configure the Push Configuration from your App's Firebase Cloud Messaging Console, also known as [FCM Console](https://console.firebase.google.com) following the steps provided [here](./Firebase_Instructions.md).
 
 When the APertain inititialization code is executed, APertain automatically registers the FCM Push Notifications to be listened by the APertain SDK. There is no additional coding needed. If you would like to subscribe for more Push Notifications from FCM, you can do so.
+
+If you would like to handle the APertain Push Notifications in a custom manner and push your own Notifications from your custom code, you would need to implement the interface APertainPushActionListener and mention the same in the AndroidManifest.xml. 
+
+	<!-- Android Manifest meta-data to configure which class in your App implements ApertainPushActionListener interface -->
+	<meta-data android:name="com.jkl.apertain.fcm.ApertainPushActionListener" android:value="com.yourcompany.yourapp.yoursubpackage.ApertainDemoPushActionListener" />
+
+Please refer for a sample code [here]./resources/ApertainDemoPushActionListener.java managing how to push the Notification to the Device show up a custom activity or fragment within your App.
