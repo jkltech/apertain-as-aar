@@ -318,7 +318,7 @@ The Customer On-Boarding UI will be used as a self explanatory introduction to y
 
 Here is the Sample UI of a single screen in A(P)ertain On-Boarding UI.
 
-![Image of Customer On-boarding UI Design Sample](https://apertain.com/app/prd/api/customer_onboarding_ui_sample.jpg)
+![Image of Customer On-boarding UI Design Sample](./images/customer_onboarding_ui_sample.jpg)
 
 #### 9.1. A(P)ertain OnBoardingUI has Four arguments:
 
