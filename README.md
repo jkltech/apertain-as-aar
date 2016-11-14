@@ -1,7 +1,7 @@
-A(P)ertain SDK v2.2.3 for Android - Getting Started (For Android Studio)
+A(P)ertain SDK v2.4.4 for Android - Getting Started (For Android Studio)
 ========================================================================
 
-This document describes how to get started using the A(P)ertain SDK v2.2.3 for Android.
+This document describes how to get started using the A(P)ertain SDK v2.4.4 for Android.
 
 Before you Begin
 ----------------
@@ -88,6 +88,10 @@ The App Unique ID and User App Signature are generated as you add the App in A(P
 
 	String appUniqueID = "xxxxxxxxxx";
 	String userAppSignature = "xxxxx";
+	
+	appUniqueID = ApertainUtil.getAppUniqueID(context);
+	userAppSignature = ApertainUtil.getUserAppSignature(context);
+	
 	try {
 		ApertainFactory.init(context, appUniqueID, userAppSignature);
 		ApertainFactory.setUserName(userName); //Optional. If Game/App has collected username from User
@@ -209,6 +213,15 @@ Please add the following code to show the App Support Chat View as another Activ
 
 	Intent inAppSupportActivityIntent = new Intent(context, InAppSupportActivity.class);
 	startActivity(inAppSupportActivityIntent);
+	
+#### 5.4 Custom In App Support View’s Title and Action bar Color
+
+The following function is used to change the Action bar color and title for Activity and Fragment.
+
+	int color = getResources().getColor(R.color.light_red);
+	String title = "APertain In-App Support View";/* Limited to 25 to 30 Letters based on Character width */
+	
+	ApertainFactory.setInAppSupportTitle(context, title, color);
 
 ### 6. Tracking Activities & Processes
 
@@ -326,6 +339,7 @@ Here is the Sample UI of a single screen in A(P)ertain On-Boarding UI.
 2. Integer array of resource that mention Title text for each page.
 3. Integer array of resource that mention Description Text for each page.
 4. Integer array of resource that mention Background colors for each page.
+5. Integer array of resource that mentions whether screenshot is bottom or top oriented.
 
 The array size determines the number of Screens in the Customer On-Boarding UI. For example the array for each argument is four, you will get four Screens.
 
@@ -345,6 +359,15 @@ The sample arrays.xml for declaring the Screenshot Images, Title, Description & 
 	int[] onboardingImagesPortrait = R.array.onboard_ui_images_portrait;
 	int[] onboardingUIBackgroundColors = R.array.onboard_ui_colors;
 	
+
+	/**
+	 ** Integers to mention mobile template image in Onboarding. 
+	 ** If onBoardingMobileTemplateMode is null, it will take default value (i.e) 0.
+	 ** 0 - Top Image
+	 ** 1 - Bottom Image
+	 */
+	int[] onBoardingMobileTemplateMode = R.array.onboarding_ui_mode;
+	
 	/* You can use either Fragment class or a FragmentActivity class to show up onboarding UI */
 	android.support.v4.app.FragmentActivity fragmentActivity = (FragmentActivity)activity;
 
@@ -361,7 +384,7 @@ The sample arrays.xml for declaring the Screenshot Images, Title, Description & 
 
 	if (apertainInstance != null) {
 		apertainInstance.showUserOnboardingUI(fragmentActivity, onboardingImagesLand, onboardingImagesPortrait, onboardingUIBackgroundColors,
-												titlesStrArr, descStrArr);
+												titlesStrArr, descStrArr, onBoardingMobileTemplateMode);
 	}
 
 ### 10. Push Notifications
