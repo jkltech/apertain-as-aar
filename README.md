@@ -72,6 +72,14 @@ Using Smart Push Notifications feature of APertain needs a specific set of class
 		</intent-filter>
 	</service>
 
+	<receiver android:name="com.jkl.apertain.util.APertainBroadcastReceiver" android:enabled="true">
+		<intent-filter>
+			<action android:name="android.intent.action.BOOT_COMPLETED"/>
+			<action android:name="android.intent.action.QUICKBOOT_POWERON" />
+			<action android:name="android.intent.action.NOTIFY" />
+		</intent-filter>
+	</receiver>
+	
 	<-- For Customizing Push Notification On Click Event -->
 	<meta-data android:name="com.jkl.apertain.fcm.ApertainPushActionListener"
 		android:value="APP_IMPLMENTATION_OF_APERTAIN_PUSH_ACTION_LISTENER_INTERFACE" />
@@ -193,7 +201,7 @@ Most developers add the App Support Chat Icon to the layout defining their own A
 
 Alternatively you can have your own icon to show the Support Chat Interface and add the click listener to that layout or button and call the following code inside onClick:
 
-	aPertainInstance.showApertainAppSupportChatter();
+	apertainInstance.showApertainConversationChatter();
 
 As showing the In-App Support Chat will invade the flow of your App, if you would like to pause and resume your underlying Activity or Fragment code, please implement the ResumableActivity with methods pauseActivity() and resumeActivity() to add a callback for pausing and resuming the underlying activity or Fragment.
 
@@ -412,4 +420,4 @@ If you would like to handle the APertain Push Notifications in a custom manner a
 	<!-- Android Manifest meta-data to configure which class in your App implements ApertainPushActionListener interface -->
 	<meta-data android:name="com.jkl.apertain.fcm.ApertainPushActionListener" android:value="com.yourcompany.yourapp.yoursubpackage.ApertainDemoPushActionListener" />
 
-Please refer for a sample code [here]./resources/ApertainDemoPushActionListener.java managing how to push the Notification to the Device show up a custom activity or fragment within your App.
+Please refer for a sample code [here](./resources/ApertainDemoPushActionListener.java) managing how to push the Notification to the Device show up a custom activity or fragment within your App.
