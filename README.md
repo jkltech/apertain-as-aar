@@ -91,7 +91,7 @@ Using Smart Push Notifications feature of APertain needs a specific set of class
 ### 2. Initialize the SDK
 
 In the Activity that loads your app write the following code in onCreate(), to initialize the A(P)ertain SDK. This should be called only once in your App/Game on the first Activity loaded by the App/Game.
-
+	
 The App Unique ID and User App Signature are generated as you add the App in A(P)ertain SaaS backend. These unique ids will identify the App and the User registered with the A(P)ertain SaaS backend.
 
 	String appUniqueID = "xxxxxxxxxx";
@@ -107,6 +107,10 @@ The App Unique ID and User App Signature are generated as you add the App in A(P
 	} catch (ApertainException ape) {
 		Log.e(TAG, "Error while initializing A(P)ertain " + ape.getMessage(), ape);
 	}
+
+If you would like to add more user information other than User Name and User E-Mail, you can use the following API call to store custom user data with App Registration.
+
+	ApertainFactory.setUserData(context, key, value); /* Where key is any String value which represents the data stored and value is the actual value for the key */
 
 #### 2.1 Destroy the A(P)ertain Object
 
@@ -189,7 +193,7 @@ As a developer you can place this view in any layout of your choice to let the u
 	} catch (ApertainException ape) {
 		Log.e(TAG, "Error while creating A(P)ertain Instance" + ape.getMessage(), ape);
 	}
-
+	
 #### 5.1 App Support Chat View as a Popup within your Activity or Fragment:
 
 Please add the following code to show the App Support Chat View as a Popup in your Activity or Fragment.
