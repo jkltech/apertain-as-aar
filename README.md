@@ -226,6 +226,13 @@ Please add the following code to show the App Support Chat View as another Activ
 	Intent inAppSupportActivityIntent = new Intent(context, InAppSupportActivity.class);
 	startActivity(inAppSupportActivityIntent);
 	
+Please add the following in your App Manifest file under application tag.
+
+	<activity
+		android:name="com.jkl.apertain.ui.InAppSupportActivity"
+		android:label="@string/title_activity_in_app_support" >
+	</activity>
+	
 #### 5.4 Custom In App Support View’s Title and Action bar Color
 
 The following function is used to change the Action bar color and title for Activity and Fragment.
